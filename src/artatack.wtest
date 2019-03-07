@@ -1,0 +1,104 @@
+import colores.*
+
+describe {
+
+	var rosita=new Pintura()
+	var juanito=new Pintura()
+	var laFiesta=new Fotografia()
+	var personaEnUnaBotella=new Fotografia()
+	var horacioCopola=new Artista()
+	var juanCastagnino=new Artista()
+	var	greteStern=new Artista()
+	var raulSoldi= new Artista()
+	var muestra=new MuestrasCromaticas()
+	var escultura=new Escultura()
+	var angeles=new Fotografia()
+	
+	fixture{
+		juanito.setPersonasEstimadas(20000)
+		juanito.setArtista(horacioCopola)
+		juanito.artista()
+		juanito.setNivelDeDesgaste(240)
+		juanito.setColor(azul)
+		juanito.setColor(verde)
+		juanito.setColor(rojo)
+		rosita.setPersonasEstimadas(15000)
+		rosita.setNivelDeDesgaste(80)
+		rosita.setArtista(juanCastagnino)
+		rosita.artista()
+		rosita.setColor(amarillo)
+		rosita.setColor(fucsia)
+		laFiesta.setPersonasEstimadas(8000)
+		laFiesta.setArtista(horacioCopola)
+		laFiesta.artista()
+		laFiesta.setColor(rojo)
+		laFiesta.setColor(marron)
+		laFiesta.setColor(fucsia)
+		laFiesta.setColor(naranja)
+		personaEnUnaBotella.setPersonasEstimadas(18000)
+ 		personaEnUnaBotella.setColor(verde)
+		personaEnUnaBotella.setColor(amarillo)
+		personaEnUnaBotella.setArtista(greteStern)
+		personaEnUnaBotella.artista()
+		muestra.setColor(amarillo)
+		muestra.setObras(juanito)
+		muestra.setObras(angeles)
+		muestra.setDias(5)
+		angeles.setColor(amarillo)
+		
+		
+	}
+test "test1" {
+	exposicion.setObras(juanito)
+	exposicion.setObras(rosita)
+	exposicion.setObras(laFiesta)
+	assert.equals(#{horacioCopola,juanCastagnino},exposicion.conjuntoAutoresObrasFormanParte())
+	assert.equals(true,exposicion.esBrillante())
+	assert.equals([juanito],exposicion.debenSerRestauradas())
+}
+test"test2"{
+	exposicion.setObras(personaEnUnaBotella)
+	exposicion.setObras(juanito)
+	exposicion.setObras(rosita)
+	exposicion.setObras(laFiesta)
+	
+	assert.equals(#{horacioCopola,juanCastagnino,greteStern},exposicion.conjuntoAutoresObrasFormanParte())
+	//assert.equals(horacioCopola,exposicion.artistaConMasObras())
+	juanCastagnino.setMaestro(juanCastagnino)
+	exposicion.setJurado(juanCastagnino)
+	exposicion.setJurado(horacioCopola)
+	assert.equals(true,exposicion.esBrillante())
+	assert.equals(true,exposicion.artistaInfluyente(raulSoldi))
+}
+test "test3"{
+	exposicion.setCantPersonasDeIngreso(7000)
+	assert.equals(true,juanito.requisitosDeIngreso(exposicion))
+	assert.equals(false,exposicion.estaInhabilitada(juanito))
+	assert.equals(true,exposicion.puedeFormarParte(juanito))
+	
+	
+}
+test "test4"{
+	juanito.setPersonasEstimadas(2500)
+	exposicion.activarMuestra(muestra)
+	assert.equals(2505,juanito.personasEstimadas())
+	assert.equals(5000,angeles.personasEstimadas())
+
+}
+test "test5"{
+	escultura.setPesoXKg(300)
+	escultura.setPersonasEstimadas(10000)
+	escultura.colaboradores(raulSoldi)
+	exposicion.setCantPersonasDeIngreso(2000)
+	escultura.setArtista(juanCastagnino)
+	juanCastagnino.setMaestro(raulSoldi)
+	escultura.setColor(marron)
+	escultura.setColor(amarillo)
+	assert.equals(true,escultura.esRelevante())
+	assert.equals(true,escultura.requisitosDeIngreso(exposicion))	
+}
+
+
+
+}
+
